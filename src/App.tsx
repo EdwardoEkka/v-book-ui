@@ -30,11 +30,11 @@ const App: React.FC = () => {
     palette: {
       mode: dark ? "dark" : "light",
       background: {
-        default: dark ? "#121212" : "#f4f4f4", // Total background color
-        paper: dark ? "#1E1E1E" : "#FFFFFF", // Card background color
+        default: dark ? "#121212" : "#f4f4f4",
+        paper: dark ? "#1E1E1E" : "#FFFFFF",
       },
       text: {
-        primary: dark ? "#FFFFFF" : "#000000", // Text color
+        primary: dark ? "#FFFFFF" : "#000000",
       },
     },
     components: {
@@ -54,37 +54,35 @@ const App: React.FC = () => {
       <CssBaseline />
       <Router>
         <Routes>
-          <Route
-            element={
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: { xs: "column-reverse", md: "row" },
-                  minHeight: "100vh",
-                }}
-              >
-                <AccessBar />
+          {/* Protected Routes */}
+          <Route element={<ProtectedRoute />}>
+            <Route
+              element={
                 <Box
-                  component="main"
                   sx={{
-                    flexGrow: 1,
+                    display: "flex",
+                    flexDirection: { xs: "column-reverse", md: "row" },
+                    minHeight: "100vh",
                   }}
                 >
-                  <ProtectedRoute />
+                  <AccessBar />
+                  <Box component="main" sx={{ flexGrow: 1 }}>
+                    <Outlet />
+                  </Box>
                 </Box>
-              </Box>
-            }
-          >
-            <Route element={<Outlet />}>
+              }
+            >
               <Route path="/" element={<RootChecker />} />
               <Route path="/folder/:id" element={<RootFolder />} />
               <Route path="/folder/:id/file-creation" element={<FileCreate />} />
-              <Route path="/folder/:id/file-view/:file-id" element={<ViewFile />} />
+              <Route path="/folder/:id/file-view/:fileId" element={<ViewFile />} />
               <Route path="/dash-board" element={<DashBoard />} />
               <Route path="/profile" element={<ProfilePage />} />
-              <Route path="/accessibilty" element={<AccessibilityPage/>}/>
+              <Route path="/accessibilty" element={<AccessibilityPage />} />
             </Route>
           </Route>
+
+          {/* Authentication Routes */}
           <Route
             path="/signup"
             element={
