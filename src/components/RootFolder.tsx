@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { getRootFolder, createRootFolder } from "../api/api";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
+import { Box, CircularProgress, Typography } from "@mui/material";
 
 const RootChecker = () => {
   const [rootExists, setRootExists] = useState<boolean | null>(null); // Include `null` for the loading state
@@ -35,7 +36,23 @@ const RootChecker = () => {
   }, [navigate, user.id]);
 
   if (rootExists === null) {
-    return <p>Loading...</p>;
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          height: "100vh",
+          gap: 2,
+        }}
+      >
+        <CircularProgress size={60} />
+        <Typography variant="h6" color="textSecondary">
+          Loading folder...
+        </Typography>
+      </Box>
+    );
   }
 
   if (error) {

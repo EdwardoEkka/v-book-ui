@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { getFolderById } from "../../api/api";
 import FolderContent from "./FolderContent";
 import AddFoldersAndFiles from "../../components/options";
-import { Box, Container } from "@mui/material";
+import { Box, Container,CircularProgress, Typography  } from "@mui/material";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 
@@ -38,7 +38,23 @@ const RootFolder = () => {
   }, [id, user.id]);
 
   if (loading) {
-    return <p>Loading...</p>;
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          height: "100vh",
+          gap: 2,
+        }}
+      >
+        <CircularProgress size={60} />
+        <Typography variant="h6" color="textSecondary">
+          Loading folder...
+        </Typography>
+      </Box>
+    );
   }
 
   if (error) {

@@ -4,13 +4,14 @@ import { useEffect, useState } from "react";
 import { RootState } from "../store/store";
 import { setUserDetails, setIsAuthenticated } from "../store/auth";
 import { authenticateUser } from "../api/api";
+import { Box, CircularProgress, Typography } from "@mui/material";
 
 const ProtectedRoute = () => {
   const dispatch = useDispatch();
   const isAuthenticated = useSelector(
     (state: RootState) => state.user.isAuthenticated
   );
-  const [loading, setLoading] = useState(true); // Track loading state
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const authenticateUserHere = async () => {
@@ -22,28 +23,41 @@ const ProtectedRoute = () => {
         console.log("Authentication failed:", error);
         dispatch(setIsAuthenticated(false));
       } finally {
-        setLoading(false); // End loading state
+        setLoading(false);
       }
     };
 
     if (!isAuthenticated) {
-      authenticateUserHere(); // Authenticate if not already authenticated
+      authenticateUserHere();
     } else {
-      setLoading(false); // Skip authentication if already authenticated
+      setLoading(false);
     }
   }, [dispatch, isAuthenticated]);
 
-  // Show loading state while authentication is being checked
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          height: "100vh",
+          gap: 2,
+        }}
+      >
+        <CircularProgress size={60} />
+        <Typography variant="h6" color="textSecondary">
+          Authenticating...
+        </Typography>
+      </Box>
+    );
   }
 
-  // Redirect to the sign-in page if not authenticated
   if (!isAuthenticated) {
     return <Navigate to="/signin" />;
   }
 
-  // Render the nested routes if authenticated
   return <Outlet />;
 };
 
