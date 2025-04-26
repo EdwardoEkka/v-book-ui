@@ -21,6 +21,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "./store/store";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import AccessibilityPage from "./pages/accessibility/AccessibilityPage";
+import Auth from "./components/Auth";
 
 const App: React.FC = () => {
   const dark = useSelector((state: RootState) => state.accessibilty.isDark);
@@ -99,6 +100,12 @@ const App: React.FC = () => {
               </RedirectIfAuthenticated>
             }
           />
+          <Route path="auth/complete/google-oauth2"             
+          element={
+              <RedirectIfAuthenticated>
+                <Auth />
+              </RedirectIfAuthenticated>
+            }/>
         </Routes>
       </Router>
     </ThemeProvider>

@@ -12,6 +12,17 @@ export interface Folder {
   userId: string;
 }
 
+export interface GoogleAuthResponse  {
+  success:boolean;
+  token: string;
+  user: {
+    email: string;
+    name: string;
+    picture: string;
+    sub: string;
+  };
+};
+
 export interface File {
   id: string;
   fileName: string;
@@ -79,3 +90,6 @@ export const getAllFoldersOfUser = (userId: string) => api.get<{success: boolean
   `/folders/get-all-folders/${userId}`
 )
 
+
+export const googleAuthentication = (code: any) =>
+  api.post<GoogleAuthResponse>('/user/google-auth', { code });

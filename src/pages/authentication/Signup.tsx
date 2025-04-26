@@ -11,6 +11,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import GoogleLoginButton from "../../components/GoogleLoginButton";
 
 const Signup = () => {
   const [name, setName] = useState<string>("");
@@ -157,6 +158,7 @@ const Signup = () => {
           >
             Go To Sign In
           </Button>
+          <GoogleLoginButton />
         </Container>
 
         {/* Snackbar Toaster */}
