@@ -4,20 +4,22 @@ import { getFile } from "../../api/api";
 import { Box, Container } from "@mui/material";
 
 const ViewFile = () => {
-    const params = useParams();
+    const { fileId } = useParams();
     const [content, setContent] = useState<string>("");
 
     useEffect(() => {
+        console.log(fileId)
         const getFileData = async () => {
             try {
-                const response = await getFile(params["file-id"]); // Use bracket notation
+                const response = await getFile(fileId); 
+                console.log(response);
                 setContent(response.data.file.content)
             } catch (error) {
-                console.error(error); // Log the error for debugging
+                console.error(error); 
             }
         };
         getFileData();
-    }, [params]);
+    }, [fileId]);
 
     return (
         <Container maxWidth="lg" sx={{py:"16px"}}>
